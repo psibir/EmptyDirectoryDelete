@@ -13,7 +13,7 @@ src_dir = input("Enter the source directory: ")
 def initialchoice():
     while True:
         if warning == "y": 
-            print("Empty folders deleted.")
+            print("Proceeding to the next step...")
             break
         elif warning == "n": 
             print("Exiting...")
