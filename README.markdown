@@ -1,5 +1,5 @@
 
-# EmptyDirectoryDelete
+# emptydirectorydelete
 
 This script will delete empty folders located in a directory as given by the user. 
 
