@@ -1,52 +1,17 @@
-
 import os
-from pathlib import Path
-from contextlib import suppress
+import argparse
 
-# This script is used to delete empty directories in a given directory.
-# WARNING: THIS SCRIPT IS DESTRUCTIVE, USE CAUTION WHEN USING IT.
-
-warning = input("This script will delete all empty folders in the given directory.\nDo you wish to continue? Enter y or n: ")
-src_dir = input("Enter the source directory: ")
-
-# Warnings with initial user input prompt
-def initialchoice():
-    while True:
-        if warning == "y": 
-            print("Proceeding to the next step...")
-            break
-        elif warning == "n": 
-            print("Exiting...")
-            exit()
-        else: 
-            print("Please enter y or n.")
-            continue
-
-
-# Warnings with final user input prompt
-def finalchoice():
-    while True:
-        if final_warning == "y": 
-            main()
-            print("Empty folders deleted.")
-            exit()
-        elif final_warning == "n": 
-            print("Exiting...")
-            exit()
-        else: 
-            print("Please enter y or n.")
-            continue
-
-# Directory deletion function
-def main():
-    for root,dirs,_ in os.walk(src_dir, topdown=False):
-        for d in dirs:
-            with suppress(OSError):
-                os.rmdir(Path(root,d))
-
-initialchoice()
-final_warning = input("Preparing to delete empty directories in " + src_dir + "...\nAre you sure you want to continue? Enter y or n: ")
-finalchoice()
+def delete_empty_folders(directory):
+    for root, dirs, files in os.walk(directory, topdown=False):
+        for folder in dirs:
+            folder_path = os.path.join(root, folder)
+            if not os.listdir(folder_path):
+                os.rmdir(folder_path)
+                print(f"Deleted empty folder: {folder_path}")
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Delete empty folders from a directory.")
+    parser.add_argument("directory", help="Directory path to delete empty folders from")
+    args = parser.parse_args()
+
+    delete_empty_folders(args.directory)
